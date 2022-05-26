@@ -1,0 +1,1 @@
+export const validationFormatter = (error) => error.msg

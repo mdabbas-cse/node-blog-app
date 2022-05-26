@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <%- include('../../partials/head.ejs') %>
+</head>
+
+<body>
+
+  <%- include('../../partials/navbar.ejs') %>
+
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Section: Design Block -->
+    <section class="background-radial-gradient overflow-hidden">
+
+      <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-1">
+        <div class="row gx-lg-5 align-items-center mb-5">
+          <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
+            <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
+              The best contain <br />
+              <span style="color: hsl(218, 81%, 75%)">for you</span>
+            </h1>
+            <p class="mb-4 opacity-70" style="color: hsl(218, 81%, 85%)">
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+              Temporibus, expedita iusto veniam atque, magni tempora mollitia
+              dolorum consequatur nulla, neque debitis eos reprehenderit quasi
+              ab ipsum nisi dolorem modi. Quos?
+            </p>
+          </div>
+
+          <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
+            <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
+            <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
+
+            <div class="card bg-glass">
+              <div class="card-body px-4 py-5 px-md-5">
+                <form method="post" action="/auth/login">
+                  <!-- Email input -->
+                  <div class="form-outline mb-2">
+                    <label class="form-label text-white" for="email">Email address</label>
+                    <input type="email" id="email" name="email" value="<%= values.email ? values.email : '' %>"
+                      class="form-control bg-transparent <%= errors.email ? 'is-invalid' : '' %>"" />
+                    <span class=" text-danger">
+                    <%= errors.email && errors.email %>
+                      </span>
+                  </div>
+
+                  <!-- Password input -->
+                  <div class="form-outline mb-2">
+                    <label class="form-label text-white" for="password">Password</label>
+                    <input type="password" id="password" name="password"
+                      class="form-control bg-transparent <%= errors.password ? 'is-invalid' : '' %>"" />
+                    <span class=" text-danger">
+                    <%= errors.password && errors.password %>
+                      </span>
+                  </div>
+
+                  <!-- Checkbox -->
+                  <div class="form-check d-flex justify-content-start mb-2">
+                    <input class="form-check-input me-2" name="rememberme" type="checkbox" id="remember-me" />
+                    <label class="form-check-label text-white" for="remember-me">
+                      Remember me
+                    </label>
+                  </div>
+
+                  <!-- Submit button -->
+                  <button type="submit" class="btn btn-block btn-primary">
+                    Login
+                  </button>
+
+                  <!-- Register buttons -->
+                  <div class="text-center">
+                    <p class="text-white">or sign up with:</p>
+                    <button type="button" class="btn btn-link btn-floating mx-1">
+                      <i class="fab fa-facebook-f"></i>
+                    </button>
+
+                    <button type="button" class="btn btn-link btn-floating mx-1">
+                      <i class="fab fa-google"></i>
+                    </button>
+
+                    <button type="button" class="btn btn-link btn-floating mx-1">
+                      <i class="fab fa-twitter"></i>
+                    </button>
+
+                    <button type="button" class="btn btn-link btn-floating mx-1">
+                      <i class="fab fa-github"></i>
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Section: Design Block -->
+
+
+
+
+
+    <%- include('../../partials/foot.ejs'); %>
+</body>
+
+</html>
