@@ -1,0 +1,5 @@
+{
+  "port": "PORT",
+  "secret": "YOURSECRETKEYGOESHERE",
+  "mongoUrl": "mongodb://localhost:27017/blog"
+}
