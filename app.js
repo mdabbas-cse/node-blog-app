@@ -1,4 +1,5 @@
 import bodyParser from "body-parser"
+import config from "config"
 import flash from "connect-flash"
 import MongoDBStore from "connect-mongodb-session"
 import 'dotenv/config'
@@ -23,7 +24,8 @@ const store = new MongoBDSessionStore({
   expires: 1000 * 60 * 60 * 24 * 7,
 })
 
-console.log(app.get('env'))
+// console.log(app.get('env'))
+console.log(config.get('mode'))
 
 if (app.get('env') === 'development') { 
   app.use(morgan('dev'))
