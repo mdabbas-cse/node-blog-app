@@ -80,10 +80,14 @@ export const loginPost = async (req, res, next) => {
       throw new Error('Password is incorrect')
     }
     // req.session.user = user
-    console.log(user)
     req.session.user = user
     req.session.isLoggedIn = true
-    res.redirect('/')
+    req.session.save(err => {
+      if (err) {
+        next(err)
+      }
+      res.redirect('/dashboard')
+    })
   } catch (error) {
     console.log(error)
     next(error)
@@ -91,5 +95,10 @@ export const loginPost = async (req, res, next) => {
 }
 
 export const logout = async (req, res, next) => {
-
+  req.session.destroy(err => {
+    if (err) {
+      return next(err)
+    }
+    return res.redirect('/auth/login')
+  })
 }

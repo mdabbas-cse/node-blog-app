@@ -1,11 +1,14 @@
-import express from "express"
 import bodyParser from "body-parser"
-import mongoose from "mongoose"
-import authRoutes from "./routes/auth.js"
-import morgan from "morgan"
-import 'dotenv/config'
-import session from "express-session"
 import MongoDBStore from "connect-mongodb-session"
+import 'dotenv/config'
+import express from "express"
+import session from "express-session"
+import mongoose from "mongoose"
+import morgan from "morgan"
+import { bindUserWithRequest } from "./middleware/authMiddleware.js"
+import setLocals from "./middleware/setLocals.js"
+import authRoutes from "./routes/auth.js"
+import dashboardRoutes from "./routes/dashboard.js"
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -39,7 +42,9 @@ const middleware = [
       maxAge: 1000 * 60 * 60 * 24 * 7
     },
     store: store
-  })
+  }),
+  bindUserWithRequest(),
+  setLocals(),
 ]
 
 
@@ -48,6 +53,7 @@ app.use(middleware)
 
 // use routes
 app.use('/auth', authRoutes)
+app.use('/dashboard', dashboardRoutes)
 
 // home route
 app.get('/', (req, res) => {
