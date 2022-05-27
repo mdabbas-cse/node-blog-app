@@ -1,6 +1,7 @@
 import bcryptjs from 'bcryptjs'
 import { validationResult } from 'express-validator'
 import User from '../models/User.js'
+import Flash from '../utils/Flash.js'
 import { validationFormatter } from '../utils/validationFormatter.js'
 
 export const singupGet = async (req, res, next) => {
@@ -10,6 +11,7 @@ export const singupGet = async (req, res, next) => {
       title: 'Create an Account',
       errors: {},
       values: {},
+      flashMessage: Flash.getMessage(req),
     },
   )
 }
@@ -24,6 +26,7 @@ export const singupPost = async (req, res, next) => {
         title: 'Create an Account',
         errors: errors.mapped(),
         values: { username, email, password },
+        flashMessage: Flash.getMessage(req),
       },
     )
   }
@@ -35,7 +38,8 @@ export const singupPost = async (req, res, next) => {
       email,
       password: hashedPassword,
     })
-    const userData = await user.save()
+    await user.save()
+    req.flash('success', 'You have successfully created an account, Please login')
     res.redirect('/auth/login')
   } catch (error) {
     next(error)
@@ -49,6 +53,7 @@ export const loginGet = async (req, res, next) => {
       title: 'Login || Blog',
       errors: {},
       values: {},
+      flashMessage: Flash.getMessage(req),
     },
   )
 }
@@ -57,14 +62,15 @@ export const loginPost = async (req, res, next) => {
   const { email, password } = req.body
 
   const errors = validationResult(req).formatWith(validationFormatter)
-  console.log('errors', errors)
   if (!errors.isEmpty()) {
+    req.flash('fail', 'Invalid email or password')
     return res.render(
       'pages/auth/login',
       {
         title: 'Login || Blog',
         errors: errors.mapped(),
-        values: { email }
+        values: { email },
+        flashMessage: Flash.getMessage(req),
       },
     )
   }
@@ -86,6 +92,7 @@ export const loginPost = async (req, res, next) => {
       if (err) {
         next(err)
       }
+      req.flash('success', 'You have successfully logged in')
       res.redirect('/dashboard')
     })
   } catch (error) {

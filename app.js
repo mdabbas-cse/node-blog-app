@@ -1,4 +1,5 @@
 import bodyParser from "body-parser"
+import flash from "connect-flash"
 import MongoDBStore from "connect-mongodb-session"
 import 'dotenv/config'
 import express from "express"
@@ -9,6 +10,7 @@ import { bindUserWithRequest } from "./middleware/authMiddleware.js"
 import setLocals from "./middleware/setLocals.js"
 import authRoutes from "./routes/auth.js"
 import dashboardRoutes from "./routes/dashboard.js"
+import Flash from "./utils/Flash.js"
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -21,6 +23,11 @@ const store = new MongoBDSessionStore({
   expires: 1000 * 60 * 60 * 24 * 7,
 })
 
+console.log(app.get('env'))
+
+if (app.get('env') === 'development') { 
+  app.use(morgan('dev'))
+}
 
 // set view engine
 app.set('view engine', 'ejs')
@@ -33,7 +40,6 @@ const middleware = [
   bodyParser.urlencoded({ extended: true }),
   bodyParser.json(),
   express.static('public'),
-  morgan('dev'),
   session({
     secret: process.env.SECRET_KEY || 'keyboard cat',
     resave: false,
@@ -45,6 +51,7 @@ const middleware = [
   }),
   bindUserWithRequest(),
   setLocals(),
+  flash()
 ]
 
 
@@ -57,13 +64,22 @@ app.use('/dashboard', dashboardRoutes)
 
 // home route
 app.get('/', (req, res) => {
-  console.log('home page', req.session.user)
-  res.render('pages/index')
+  res.render('pages/index',
+  {
+      title: '404',
+      flashMessage: Flash.getMessage(req),
+    }
+  )
 })
 
 // 404 page 
 app.route('*').get((req, res) => {
-  res.status(404).render('pages/404')
+  res.status(404).render('pages/404',
+    {
+      title: '404',
+      flashMessage: Flash.getMessage(req),
+    }
+  )
 })
 
 // connect to mongodb

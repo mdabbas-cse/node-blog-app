@@ -1,0 +1,20 @@
+<div class="container">
+  <style>
+    .alert {
+      width: 450px;
+      margin: 0 auto;
+    }
+  </style>
+  <% if(flashMessage.success) { %>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <%= flashMessage.success %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <% } %>
+      <% if(flashMessage.fail) { %>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <%= flashMessage.fail %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <% } %>
+</div>
