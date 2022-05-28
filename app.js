@@ -9,9 +9,7 @@ import mongoose from "mongoose"
 import morgan from "morgan"
 import { bindUserWithRequest } from "./middleware/authMiddleware.js"
 import setLocals from "./middleware/setLocals.js"
-import authRoutes from "./routes/auth.js"
-import dashboardRoutes from "./routes/dashboard.js"
-import Flash from "./utils/Flash.js"
+import registerRoute from "./routes/routes.js"
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -24,10 +22,7 @@ const store = new MongoBDSessionStore({
   expires: 1000 * 60 * 60 * 24 * 7,
 })
 
-// console.log(app.get('env'))
-console.log(config.get('mode'))
-
-if (app.get('env') === 'development') { 
+if (app.get('env') === 'development') {
   app.use(morgan('dev'))
 }
 
@@ -61,28 +56,8 @@ const middleware = [
 app.use(middleware)
 
 // use routes
-app.use('/auth', authRoutes)
-app.use('/dashboard', dashboardRoutes)
+registerRoute(app)
 
-// home route
-app.get('/', (req, res) => {
-  res.render('pages/index',
-  {
-      title: '404',
-      flashMessage: Flash.getMessage(req),
-    }
-  )
-})
-
-// 404 page 
-app.route('*').get((req, res) => {
-  res.status(404).render('pages/404',
-    {
-      title: '404',
-      flashMessage: Flash.getMessage(req),
-    }
-  )
-})
 
 // connect to mongodb
 mongoose.connect(mongoUri)
