@@ -77,7 +77,6 @@ export const loginPost = async (req, res, next) => {
 
   try {
     const user = await User.findOne({ email })
-    console.log(user)
     if (!user) {
       throw new Error('User not found')
     }
@@ -96,7 +95,6 @@ export const loginPost = async (req, res, next) => {
       res.redirect('/dashboard')
     })
   } catch (error) {
-    console.log(error)
     next(error)
   }
 }
