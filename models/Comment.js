@@ -1,6 +1,8 @@
-import { Schema, model } from "mongoose"
-import Post from "./Post"
+import mongoose from "mongoose"
 import User from "./User.js"
+
+
+const { Schema, model } = mongoose
 
 const commentSchema = new Schema({
   post: {

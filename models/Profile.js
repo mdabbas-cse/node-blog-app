@@ -1,6 +1,10 @@
-import {Schema, model} from "mongoose"
+import mongoose from "mongoose"
 import Post from "./Post.js"
 import User from "./User.js"
+
+
+
+const { Schema, model } = mongoose
 
 const profileSchema = new Schema({
   user: {
