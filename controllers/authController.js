@@ -92,7 +92,7 @@ export const loginPost = async (req, res, next) => {
         next(err)
       }
       req.flash('success', 'You have successfully logged in')
-      res.redirect('/dashboard')
+      res.redirect('/dashboard/')
     })
   } catch (error) {
     next(error)

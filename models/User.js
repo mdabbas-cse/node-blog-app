@@ -26,6 +26,10 @@ const userSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Profile'
   },
+  profilePicture: {
+    type: String,
+    default: '/uploads/users/default.png'
+  }
 }, { timestamps: true })
 
 const User = model("User", userSchema)
