@@ -1,6 +1,7 @@
 import Flash from "../utils/Flash.js"
 import authRoutes from "./auth.js"
 import dashboardRoutes from "./dashboard.js"
+import upload from './upload.js'
 
 
 export default (app) => {
@@ -14,6 +15,7 @@ export default (app) => {
       }
     )
   })
+  app.use('/upload', upload)
 
   // app.route('*').get((req, res) => {
   //   res.status(404).render('pages/error/404',
